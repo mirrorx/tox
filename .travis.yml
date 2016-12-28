@@ -1,7 +1,5 @@
 dist: trusty
 install:
-- travis_retry sudo apt-get -y update
-- travis_retry sudo apt-get -y install autotools-dev build-essential git libtool python-dev wget
 # Install libsodium
 - travis_retry wget https://github.com/jedisct1/libsodium/releases/download/1.0.11/libsodium-1.0.11.tar.gz
 - tar -xf libsodium-1.0.11.tar.gz
@@ -11,7 +9,6 @@ install:
 - sudo make install
 - popd
 # Install libtoxcore
-- travis_retry git clone https://github.com/irungentoo/toxcore
 - pushd toxcore
 - git checkout dcf2aaa53005060608353b9d66b9917fd7ed18a9
 - autoreconf -i
