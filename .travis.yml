@@ -4,7 +4,7 @@ install:
 - travis_retry sudo apt-get -y install autotools-dev build-essential git libtool python-dev wget
 # Install libsodium
 - travis_retry wget https://github.com/jedisct1/libsodium/releases/download/1.0.11/libsodium-1.0.11.tar.gz
-- tar -xf tar -xf libsodium-1.0.11.tar.gz
+- tar -xf libsodium-1.0.11.tar.gz
 - pushd libsodium-1.0.11
 - sh configure
 - make
