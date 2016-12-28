@@ -1,0 +1,35 @@
+dist: trusty
+install:
+- travis_retry sudo apt-get -y update
+- travis_retry sudo apt-get -y install autotools-dev build-essential git libtool python-dev wget
+# Install libsodium
+- travis_retry wget https://github.com/jedisct1/libsodium/releases/download/1.0.11/libsodium-1.0.11.tar.gz
+- tar -xf tar -xf libsodium-1.0.11.tar.gz
+- pushd libsodium-1.0.11
+- sh configure
+- make
+- sudo make install
+- popd
+# Install libtoxcore
+- travis_retry git clone https://github.com/irungentoo/toxcore
+- pushd toxcore
+- git checkout dcf2aaa53005060608353b9d66b9917fd7ed18a9
+- autoreconf -i
+- sh configure
+- make
+- sudo make install
+- popd
+- export LD_LIBRARY_PATH=/usr/local/lib
+# Install Go
+- travis_retry wget https://storage.googleapis.com/golang/go1.6.2.linux-amd64.tar.gz
+- tar -xf go1.6.2.linux-amd64.tar.gz
+- sudo mv go /usr/local
+- mkdir $HOME/go
+- export GOROOT=/usr/local/go
+- export PATH=$PATH:$GOROOT/bin
+- export GOPATH=$HOME/go
+- export GOOS=$(go env GOOS)
+- export GOARCH=$(go env GOARCH)
+- travis_retry go get golang.org/x/crypto/curve25519
+script:
+- python waf configure build test install
